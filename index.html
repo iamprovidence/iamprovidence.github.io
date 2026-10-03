@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iamprovidence</title>
+<meta name="description" content="Indie games by iamprovidence: Sky Battle and Castle Fight, free on Google Play.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<style>
+  :root {
+    --bg-top: #eef2f7;
+    --bg-bottom: #dde6ef;
+    --text: #1b3a57;
+    --muted: #4a6b8a;
+    --card-bg: #ffffff;
+    --accent: #e63946;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: var(--text);
+    background: linear-gradient(var(--bg-top), var(--bg-bottom));
+    overflow-x: hidden;
+  }
+  /* faint pixel grid over the gradient */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(27, 58, 87, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(27, 58, 87, 0.045) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* pixel squares drifting up, colors borrowed from both games */
+  .px {
+    position: fixed;
+    bottom: -40px;
+    border-radius: 3px;
+    opacity: 0;
+    animation: rise linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    8%   { opacity: 0.5; }
+    85%  { opacity: 0.45; }
+    100% { transform: translateY(-110vh) rotate(160deg); opacity: 0; }
+  }
+  .p1  { left: 6%;  width: 14px; height: 14px; background: #e63946; animation-duration: 34s; }
+  .p2  { left: 15%; width: 10px; height: 10px; background: #f4c542; animation-duration: 44s; animation-delay: -12s; }
+  .p3  { left: 26%; width: 18px; height: 18px; background: #5aa9e6; animation-duration: 52s; animation-delay: -30s; }
+  .p4  { left: 37%; width: 9px;  height: 9px;  background: #3d8b4f; animation-duration: 38s; animation-delay: -20s; }
+  .p5  { left: 48%; width: 13px; height: 13px; background: #f4c542; animation-duration: 58s; animation-delay: -45s; }
+  .p6  { left: 58%; width: 11px; height: 11px; background: #e63946; animation-duration: 42s; animation-delay: -8s; }
+  .p7  { left: 68%; width: 16px; height: 16px; background: #3d8b4f; animation-duration: 48s; animation-delay: -36s; }
+  .p8  { left: 78%; width: 10px; height: 10px; background: #5aa9e6; animation-duration: 36s; animation-delay: -16s; }
+  .p9  { left: 88%; width: 14px; height: 14px; background: #f4c542; animation-duration: 54s; animation-delay: -40s; }
+  .p10 { left: 95%; width: 9px;  height: 9px;  background: #e63946; animation-duration: 40s; animation-delay: -25s; }
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 56px 16px 24px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+  }
+  header p { color: var(--muted); font-size: 1.1rem; margin: 10px 0 0; }
+  main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    padding: 24px 16px 64px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .game {
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border-radius: 24px;
+    width: 420px;
+    max-width: 100%;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(27, 58, 87, 0.25);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .game:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 56px rgba(27, 58, 87, 0.35);
+  }
+  .shot {
+    aspect-ratio: 1024 / 500;
+    background-size: cover;
+    background-position: center;
+  }
+  .sky .shot { background-image: url("assets/skybattle/banner.png"); }
+  .castle .shot { background-image: url("assets/castlefight/banner.png"); }
+  .body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px 24px 28px;
+    text-align: center;
+  }
+  h2 { margin: 4px 0 10px; font-size: 1.7rem; }
+  .body p { color: var(--muted); line-height: 1.55; margin: 0 0 20px; flex: 1; }
+  .play-btn {
+    display: inline-block;
+    align-self: center;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 13px 30px;
+    border-radius: 999px;
+    box-shadow: 0 6px 0 #b22733;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .play-btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 #b22733; }
+  .castle .play-btn { background: #3d8b4f; box-shadow: 0 6px 0 #2c6639; }
+  .castle .play-btn:hover { box-shadow: 0 4px 0 #2c6639; }
+</style>
+</head>
+<body>
+  <div class="px p1"></div>
+  <div class="px p2"></div>
+  <div class="px p3"></div>
+  <div class="px p4"></div>
+  <div class="px p5"></div>
+  <div class="px p6"></div>
+  <div class="px p7"></div>
+  <div class="px p8"></div>
+  <div class="px p9"></div>
+  <div class="px p10"></div>
+
+  <header>
+    <h1>iamprovidence</h1>
+    <p>Small handcrafted games, free on Google Play</p>
+  </header>
+
+  <main>
+    <section class="game sky">
+      <div class="shot"></div>
+      <div class="body">
+        <h2>Sky Battle</h2>
+        <p>Arcade plane shooter — dodge and shoot down waves of enemy planes, defeat island bosses, upgrade your plane in the hangar and chase high scores in endless mode.</p>
+        <a class="play-btn" href="https://play.google.com/store/apps/details?id=io.github.iamprovidence.skybattle">Get it on Google Play</a>
+      </div>
+    </section>
+
+    <section class="game castle">
+      <div class="shot"></div>
+      <div class="body">
+        <h2>Castle Fight</h2>
+        <p>Lane auto-battler — build your army, send units to storm the enemy castle and defend your own. Outsmart your opponent and bring their walls down.</p>
+        <a class="play-btn" href="https://play.google.com/store/apps/details?id=io.github.iamprovidence.castlefight">Get it on Google Play</a>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

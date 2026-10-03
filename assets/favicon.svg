@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" fill="#185fa5"/>
+  <path d="M32 2 A30 30 0 0 1 32 62 A15 15 0 0 1 32 32 A15 15 0 0 0 32 2 Z" fill="#5aa9e6"/>
+  <path d="M32 10 A22 22 0 0 1 32 54 A11 11 0 0 1 32 32 A11 11 0 0 0 32 10 Z" fill="#b5d4f4" transform="rotate(50 32 32)"/>
+  <path d="M32 18 A14 14 0 0 1 32 46 A7 7 0 0 1 32 32 A7 7 0 0 0 32 18 Z" fill="#ffffff" transform="rotate(110 32 32)"/>
+</svg>
